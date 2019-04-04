@@ -37,7 +37,7 @@ public class ReportGenServiceImpl implements ReportGenService {
 		if(duration.equals("month")) {
 			for(REPORT_MASTER singleReport: reportMasterDetails) {
 				List<Integer>yAxisvalues=new ArrayList<Integer>();
-				System.out.println(singleReport.getReportId());
+				
 				List<String>xAxisvalues=new ArrayList<String>();
 				Map<String,Object>reportChart= new HashMap<String,Object>();
 				String reportId = singleReport.getReportId();
@@ -51,8 +51,7 @@ public class ReportGenServiceImpl implements ReportGenService {
 					DateTimeFormatter dtf = DateTimeFormat.forPattern("dd/MM/yyyy");
 					LocalDate startDate= LocalDate.parse(relevantReportDetails.get(0).getX_VALUE(), dtf);
 					LocalDate endDate=LocalDate.parse(relevantReportDetails.get(relevantReportDetails.size()-1).getX_VALUE(), dtf);
-					System.out.println(startDate);
-					System.out.println(endDate);
+					
 					while(startDate.compareTo(endDate)<=0){
 						LocalDate tempDate= startDate.plusMonths(1);
 						int count=0;
@@ -78,8 +77,7 @@ public class ReportGenServiceImpl implements ReportGenService {
 					DateTimeFormatter dtf = DateTimeFormat.forPattern("dd/MM/yyyy");
 					LocalDate startDate= LocalDate.parse(relevantReportDetails.get(0).getX_VALUE(), dtf);
 					LocalDate endDate=LocalDate.parse(relevantReportDetails.get(relevantReportDetails.size()-1).getX_VALUE(), dtf);
-					System.out.println(startDate);
-					System.out.println(endDate);
+					
 					while(startDate.compareTo(endDate)<=0){
 						LocalDate tempDate= startDate.plusMonths(1);
 						int sum=0;
@@ -113,7 +111,6 @@ public class ReportGenServiceImpl implements ReportGenService {
 		if(duration.equals("week")) {
 			for(REPORT_MASTER singleReport: reportMasterDetails) {
 				List<Integer>yAxisvalues=new ArrayList<Integer>();
-				System.out.println(singleReport.getReportId());
 				List<String>xAxisvalues=new ArrayList<String>();
 				Map<String,Object>reportChart= new HashMap<String,Object>();
 				String reportId = singleReport.getReportId();
@@ -127,8 +124,7 @@ public class ReportGenServiceImpl implements ReportGenService {
 					DateTimeFormatter dtf = DateTimeFormat.forPattern("dd/MM/yyyy");
 					LocalDate startDate= LocalDate.parse(relevantReportDetails.get(0).getX_VALUE(), dtf);
 					LocalDate endDate=LocalDate.parse(relevantReportDetails.get(relevantReportDetails.size()-1).getX_VALUE(), dtf);
-					System.out.println(startDate);
-					System.out.println(endDate);
+					
 					while(startDate.compareTo(endDate)<=0){
 						LocalDate tempDate= startDate.plusWeeks(1);
 						int count=0;
@@ -154,8 +150,7 @@ public class ReportGenServiceImpl implements ReportGenService {
 					DateTimeFormatter dtf = DateTimeFormat.forPattern("dd/MM/yyyy");
 					LocalDate startDate= LocalDate.parse(relevantReportDetails.get(0).getX_VALUE(), dtf);
 					LocalDate endDate=LocalDate.parse(relevantReportDetails.get(relevantReportDetails.size()-1).getX_VALUE(), dtf);
-					System.out.println(startDate);
-					System.out.println(endDate);
+					
 					while(startDate.compareTo(endDate)<=0){
 						LocalDate tempDate= startDate.plusWeeks(1);
 						int sum=0;
@@ -188,7 +183,6 @@ public class ReportGenServiceImpl implements ReportGenService {
 		if(duration.equals("day")) {
 			for(REPORT_MASTER singleReport: reportMasterDetails) {
 				List<Integer>yAxisvalues=new ArrayList<Integer>();
-				System.out.println(singleReport.getReportId());
 				List<String>xAxisvalues=new ArrayList<String>();
 				Map<String,Object>reportChart= new HashMap<String,Object>();
 				String reportId = singleReport.getReportId();
@@ -202,8 +196,7 @@ public class ReportGenServiceImpl implements ReportGenService {
 					DateTimeFormatter dtf = DateTimeFormat.forPattern("dd/MM/yyyy");
 					LocalDate startDate= LocalDate.parse(relevantReportDetails.get(0).getX_VALUE(), dtf);
 					LocalDate endDate=LocalDate.parse(relevantReportDetails.get(relevantReportDetails.size()-1).getX_VALUE(), dtf);
-					System.out.println(startDate);
-					System.out.println(endDate);
+				
 					while(startDate.compareTo(endDate)<=0){
 						LocalDate tempDate= startDate.plusDays(1);
 						int count=0;
@@ -230,8 +223,7 @@ public class ReportGenServiceImpl implements ReportGenService {
 					DateTimeFormatter dtf = DateTimeFormat.forPattern("dd/MM/yyyy");
 					LocalDate startDate= LocalDate.parse(relevantReportDetails.get(0).getX_VALUE(), dtf);
 					LocalDate endDate=LocalDate.parse(relevantReportDetails.get(relevantReportDetails.size()-1).getX_VALUE(), dtf);
-					System.out.println(startDate);
-					System.out.println(endDate);
+					
 					while(startDate.compareTo(endDate)<=0){
 						LocalDate tempDate= startDate.plusDays(1);
 						int sum=0;
