@@ -84,7 +84,7 @@ public class FusionDBController {
     
     @CrossOrigin
 	@RequestMapping(value="/getreport", method = RequestMethod.GET)
-    public List<Object> getGenReport(@RequestParam String duration){
-    	return reportGenService.genReport(duration);
+    public List<Object> getGenReport(@RequestParam String duration, @RequestParam String from, @RequestParam String to){
+    	return reportGenService.genReport(duration,from,to);
     }
 }

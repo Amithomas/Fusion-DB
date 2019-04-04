@@ -29,7 +29,7 @@ public class ReportGenServiceImpl implements ReportGenService {
 	@Autowired
 	private REPORT_DETAILS_Repository reportDetails;
 	
-	public List<Object> genReport(String duration){
+	public List<Object> genReport(String duration, String from, String to){
 		
 		List<Object>Report= new ArrayList<Object>();
 		List<REPORT_MASTER> reportMasterDetails= reportMaster.findAll();
@@ -48,32 +48,6 @@ public class ReportGenServiceImpl implements ReportGenService {
 				
 				relevantReportDetails.sort(Comparator.comparing(REPORT_DETAILS::getX_VALUE));
 				if(singleReport.getFORMULA().equals("count")) {
-					DateTimeFormatter dtf = DateTimeFormat.forPattern("dd/MM/yyyy");
-					LocalDate startDate= LocalDate.parse(relevantReportDetails.get(0).getX_VALUE(), dtf);
-					LocalDate endDate=LocalDate.parse(relevantReportDetails.get(relevantReportDetails.size()-1).getX_VALUE(), dtf);
-					
-					while(startDate.compareTo(endDate)<=0){
-						LocalDate tempDate= startDate.plusMonths(1);
-						int count=0;
-						for(REPORT_DETAILS detail:relevantReportDetails) {
-							LocalDate detailDate = LocalDate.parse(detail.getX_VALUE(), dtf);
-							if(detailDate.compareTo(tempDate)<0 && detailDate.compareTo(startDate)>=0) {
-								count++;
-							}
-
-						}
-						StringBuilder period = new StringBuilder();
-						period.append(startDate.toString());
-						period.append(" to ");
-						period.append(tempDate.minusDays(1).toString());
-						xAxisvalues.add(period.toString());
-						yAxisvalues.add(count);
-						startDate=tempDate;
-						
-					}
-				}
-				
-				if(singleReport.getFORMULA().equals("sum")) {
 					DateTimeFormatter dtf = DateTimeFormat.forPattern("dd/MM/yyyy");
 					LocalDate startDate= LocalDate.parse(relevantReportDetails.get(0).getX_VALUE(), dtf);
 					LocalDate endDate=LocalDate.parse(relevantReportDetails.get(relevantReportDetails.size()-1).getX_VALUE(), dtf);
@@ -127,32 +101,6 @@ public class ReportGenServiceImpl implements ReportGenService {
 					
 					while(startDate.compareTo(endDate)<=0){
 						LocalDate tempDate= startDate.plusWeeks(1);
-						int count=0;
-						for(REPORT_DETAILS detail:relevantReportDetails) {
-							LocalDate detailDate = LocalDate.parse(detail.getX_VALUE(), dtf);
-							if(detailDate.compareTo(tempDate)<0 && detailDate.compareTo(startDate)>=0) {
-								count++;
-							}
-
-						}
-						StringBuilder period = new StringBuilder();
-						period.append(startDate.toString());
-						period.append(" to ");
-						period.append(tempDate.minusDays(1).toString());
-						xAxisvalues.add(period.toString());
-						yAxisvalues.add(count);
-						startDate=tempDate;
-						
-					}
-				}
-				
-				if(singleReport.getFORMULA().equals("sum")) {
-					DateTimeFormatter dtf = DateTimeFormat.forPattern("dd/MM/yyyy");
-					LocalDate startDate= LocalDate.parse(relevantReportDetails.get(0).getX_VALUE(), dtf);
-					LocalDate endDate=LocalDate.parse(relevantReportDetails.get(relevantReportDetails.size()-1).getX_VALUE(), dtf);
-					
-					while(startDate.compareTo(endDate)<=0){
-						LocalDate tempDate= startDate.plusWeeks(1);
 						int sum=0;
 						for(REPORT_DETAILS detail:relevantReportDetails) {
 							LocalDate detailDate = LocalDate.parse(detail.getX_VALUE(), dtf);
@@ -192,40 +140,62 @@ public class ReportGenServiceImpl implements ReportGenService {
 				}
 				
 				relevantReportDetails.sort(Comparator.comparing(REPORT_DETAILS::getX_VALUE));
+				
 				if(singleReport.getFORMULA().equals("count")) {
 					DateTimeFormatter dtf = DateTimeFormat.forPattern("dd/MM/yyyy");
 					LocalDate startDate= LocalDate.parse(relevantReportDetails.get(0).getX_VALUE(), dtf);
 					LocalDate endDate=LocalDate.parse(relevantReportDetails.get(relevantReportDetails.size()-1).getX_VALUE(), dtf);
-				
+					
 					while(startDate.compareTo(endDate)<=0){
 						LocalDate tempDate= startDate.plusDays(1);
-						int count=0;
+						int sum=0;
 						for(REPORT_DETAILS detail:relevantReportDetails) {
 							LocalDate detailDate = LocalDate.parse(detail.getX_VALUE(), dtf);
 							if(detailDate.compareTo(tempDate)<0 && detailDate.compareTo(startDate)>=0) {
-								count++;
+								sum=sum+Integer.valueOf(detail.getY_VALUE());
 							}
-					
-					
 						}
 						StringBuilder period = new StringBuilder();
 						period.append(startDate.toString());
 						period.append(" to ");
 						period.append(tempDate.minusDays(1).toString());
 						xAxisvalues.add(period.toString());
-						yAxisvalues.add(count);
+						yAxisvalues.add(sum);
 						startDate=tempDate;
 						
 					}
 				}
 				
-				if(singleReport.getFORMULA().equals("sum")) {
+				reportChart.put("Report", singleReport.getReportId());
+				reportChart.put("x-axis", xAxisvalues);
+				reportChart.put("y-axis", yAxisvalues);
+				Report.add(reportChart);
+			}
+			
+		}
+		
+		
+		
+		if(duration.equals("year")) {
+			for(REPORT_MASTER singleReport: reportMasterDetails) {
+				List<Integer>yAxisvalues=new ArrayList<Integer>();
+				List<String>xAxisvalues=new ArrayList<String>();
+				Map<String,Object>reportChart= new HashMap<String,Object>();
+				String reportId = singleReport.getReportId();
+				List<REPORT_DETAILS> relevantReportDetails= new ArrayList<REPORT_DETAILS>();
+				for(REPORT_DETAILS detail:reportDetailsList) {
+					if(detail.getREPORT_MASTER().getReportId().equals(reportId)) relevantReportDetails.add(detail);
+				}
+				
+				relevantReportDetails.sort(Comparator.comparing(REPORT_DETAILS::getX_VALUE));
+				
+				if(singleReport.getFORMULA().equals("count")) {
 					DateTimeFormatter dtf = DateTimeFormat.forPattern("dd/MM/yyyy");
 					LocalDate startDate= LocalDate.parse(relevantReportDetails.get(0).getX_VALUE(), dtf);
 					LocalDate endDate=LocalDate.parse(relevantReportDetails.get(relevantReportDetails.size()-1).getX_VALUE(), dtf);
 					
 					while(startDate.compareTo(endDate)<=0){
-						LocalDate tempDate= startDate.plusDays(1);
+						LocalDate tempDate= startDate.plusYears(1);
 						int sum=0;
 						for(REPORT_DETAILS detail:relevantReportDetails) {
 							LocalDate detailDate = LocalDate.parse(detail.getX_VALUE(), dtf);
