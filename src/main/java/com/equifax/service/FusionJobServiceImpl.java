@@ -163,13 +163,9 @@ public List<Map>getOverallDateWiseJobDetails(String from, String to) throws Pars
 		      formatter = new SimpleDateFormat("dd/MM/yyyy");
 		      Date date = (Date) formatter.parse(from);
 		      java.sql.Timestamp timeStampfrom = new Timestamp(date.getTime());
-		      System.out.println(timeStampfrom);
 		      
 		      Date date1 = (Date) formatter.parse(to);
 		      java.sql.Timestamp timeStampto = new Timestamp(date1.getTime());
-		      System.out.println(timeStampto);
-		      
-		      System.out.print(job.getDATE_SUBMITTED());
 		      
 		  if(job.getDATE_SUBMITTED().compareTo(timeStampfrom)>=0 &&job.getDATE_SUBMITTED().compareTo(timeStampto)<=0 ) {
 			if(job.getJobSTATUS().equals("COMPLETED")) completed++;
