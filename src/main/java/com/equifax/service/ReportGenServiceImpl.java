@@ -30,10 +30,10 @@ public class ReportGenServiceImpl implements ReportGenService {
 	private REPORT_DETAILS_Repository reportDetails;
 	
 	public List<Object> genReport(String duration, String from, String to){
-		
+		DateTimeFormatter fmt = DateTimeFormat.forPattern("dd/MM/yyyy");
 		List<Object>Report= new ArrayList<Object>();
 		List<REPORT_MASTER> reportMasterDetails= reportMaster.findAll();
-		List<REPORT_DETAILS> reportDetailsList= reportDetails.findAll();
+		List<REPORT_DETAILS> reportDetailsList= reportDetails.findDetails(from,to);
 		if(duration.equals("month")) {
 			for(REPORT_MASTER singleReport: reportMasterDetails) {
 				List<Integer>yAxisvalues=new ArrayList<Integer>();
@@ -64,9 +64,9 @@ public class ReportGenServiceImpl implements ReportGenService {
 					
 						}
 						StringBuilder period = new StringBuilder();
-						period.append(startDate.toString());
+						period.append(startDate.toString(fmt));
 						period.append(" to ");
-						period.append(tempDate.minusDays(1).toString());
+						period.append(tempDate.minusDays(1).toString(fmt));
 						xAxisvalues.add(period.toString());
 						yAxisvalues.add(sum);
 						startDate=tempDate;
@@ -110,9 +110,9 @@ public class ReportGenServiceImpl implements ReportGenService {
 
 						}
 						StringBuilder period = new StringBuilder();
-						period.append(startDate.toString());
+						period.append(startDate.toString(fmt));
 						period.append(" to ");
-						period.append(tempDate.minusDays(1).toString());
+						period.append(tempDate.minusDays(1).toString(fmt));
 						xAxisvalues.add(period.toString());
 						yAxisvalues.add(sum);
 						startDate=tempDate;
@@ -156,9 +156,10 @@ public class ReportGenServiceImpl implements ReportGenService {
 							}
 						}
 						StringBuilder period = new StringBuilder();
-						period.append(startDate.toString());
+						
+						period.append(startDate.toString(fmt));
 						period.append(" to ");
-						period.append(tempDate.minusDays(1).toString());
+						period.append(tempDate.minusDays(1).toString(fmt));
 						xAxisvalues.add(period.toString());
 						yAxisvalues.add(sum);
 						startDate=tempDate;
@@ -204,9 +205,9 @@ public class ReportGenServiceImpl implements ReportGenService {
 							}
 						}
 						StringBuilder period = new StringBuilder();
-						period.append(startDate.toString());
+						period.append(startDate.toString(fmt));
 						period.append(" to ");
-						period.append(tempDate.minusDays(1).toString());
+						period.append(tempDate.minusDays(1).toString(fmt));
 						xAxisvalues.add(period.toString());
 						yAxisvalues.add(sum);
 						startDate=tempDate;
