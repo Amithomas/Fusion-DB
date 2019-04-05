@@ -34,6 +34,13 @@ public class ReportGenServiceImpl implements ReportGenService {
 		List<Object>Report= new ArrayList<Object>();
 		List<REPORT_MASTER> reportMasterDetails= reportMaster.findAll();
 		List<REPORT_DETAILS> reportDetailsList= reportDetails.findDetails(from,to);
+		if(reportDetailsList.size()==0) {
+			String Status= "No values in the Boundary";
+			List<Object> statusList= new ArrayList<Object>();
+			statusList.add(Status);
+			return statusList;
+		}
+		else {
 		if(duration.equals("month")) {
 			for(REPORT_MASTER singleReport: reportMasterDetails) {
 				List<Integer>yAxisvalues=new ArrayList<Integer>();
@@ -226,5 +233,5 @@ public class ReportGenServiceImpl implements ReportGenService {
 		return Report;	
 	}
 	
-
+	}
 }
